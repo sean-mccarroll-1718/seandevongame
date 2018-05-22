@@ -1,0 +1,229 @@
+from tkinter import*
+from random import*
+cheese =0
+target = 0
+score = 0
+class createconimage:
+    def __init__(self,canvas,x1,y1,photo):
+        self.canvas = canvas
+        self.x1 = x1
+        self.y1 = y1
+        self.photo = photo
+        self.pic = PhotoImage(file = self.photo)
+        self.pic_img = self.pic
+        self.object = canvas.create_image(self.x1, self.y1, image = self.pic)
+
+    def move_object_right(self):
+        self.movex = 10
+        self.movey = 0
+        self.canvas.move(self.object, self.movex, self.movey)
+        
+    def move_object_left(self):
+        self.movex = -10
+        self.movey = 0
+        self.canvas.move(self.object, self.movex, self.movey)
+        
+    def move_object_up(self):
+        self.movex = 0
+        self.movey = -10
+        self.canvas.move(self.object, self.movex, self.movey)
+        
+    def move_object_down(self):
+        self.movex = 0
+        self.movey = 10
+        self.canvas.move(self.object, self.movex, self.movey)
+
+    def collisionsdetect(self):
+        location = canvas.bbox(self.object)
+        global cheese
+        collision = canvas.find_overlapping(location[0], location[1], location[2], location[3])
+        if 2 in collision:
+            cheese =1
+    def __repr__(self):
+        objpos = canvas.bbox(self.object)
+        self.objcordx1 = objpos[0]
+        self.objcordy1 = objpos[1]
+        self.objcordx2 = objpos[2]
+        self.objcordy2 = objpos[3]
+        return str(self.objcordx1) + "," + str(self.objcordy1) + "    " + str(self.objcordx2) + "," + str(self.objcordy2)
+                    
+class createnpcimage(createconimage):
+
+    def collisionsdetect(self):
+        location = canvas.bbox(self.object)
+        global target
+        collision = canvas.find_overlapping(location[0], location[1], location[2], location[3])
+        if 3 in collision:
+            target =1
+    def randmove(self,cobjx,cobjy, nobjx ,nobjy):
+        self.cobjx = -cobjx
+        self.cobjy = -cobjy
+        self.nobjx = nobjx
+        self.nobjy = nobjy
+
+        
+        self.canvas.move(self.object, self.cobjx, self.cobjy)
+        self.canvas.move(self.object, self.nobjx, self.nobjy)
+        
+
+    
+def movearrow(event):
+    global cheese
+    global target
+    global score
+    global chesx
+    global chesy
+    global targx
+    global targy
+    
+    if event.keysym == "Right":
+        mouse.move_object_right()
+        if cheese == 1:
+            cheeseimg.move_object_right()
+            chesx += 10
+            cheeseimg.collisionsdetect()
+            if target == 1:
+                nchesx = randint(55,945)
+                nchesy = randint(55,945)
+                ntargx = randint(10,990)
+                ntargy = randint(10,990)
+                cheeseimg.randmove(chesx, chesy, nchesx, nchesy)
+                targetimg.randmove(targx, targy, ntargx, ntargy)
+                print(cheeseimg)
+                print(targetimg)
+                cheese = 0
+                target = 0
+                score +=1
+                print(str(score))
+                scoredis.config(text ="Your score is " + str(score))
+                chesx = nchesx
+                chesy = nchesy
+                targx = ntargx
+                targy = ntargy               
+
+            
+        else:
+            mouse.collisionsdetect()
+  
+        
+    if event.keysym == "Left":
+       
+        mouse.move_object_left()
+        if cheese == 1:
+            cheeseimg.move_object_left()
+            chesx += -10
+            cheeseimg.collisionsdetect()
+            if target == 1:
+                nchesx = randint(95,900)
+                nchesy = randint(95,900)
+                ntargx = randint(10,990)
+                ntargy = randint(10,990)
+                cheeseimg.randmove(chesx, chesy, nchesx, nchesy)
+                targetimg.randmove(targx, targy, ntargx, ntargy)
+                print(cheeseimg)
+                print(targetimg)
+                cheese = 0
+                target = 0
+                score +=1
+                print(str(score))
+                scoredis.config(text ="Your score is "  + str(score))
+                chesx = nchesx
+                chesy = nchesy
+                targx = ntargx
+                targy = ntargy
+                
+                
+        
+        else:
+            mouse.collisionsdetect()
+    if event.keysym == "Up":
+       
+        mouse.move_object_up()
+        if cheese == 1:
+            cheeseimg.move_object_up()
+            chesy += -10
+            cheeseimg.collisionsdetect()
+            if target == 1:
+                nchesx = randint(55,945)
+                nchesy = randint(55,945)
+                ntargx = randint(10,990)
+                ntargy = randint(10,990)
+                cheeseimg.randmove(targx, targy, nchesx, nchesy)
+                targetimg.randmove(targx, targy, ntargx, ntargy)
+                print(cheeseimg)
+                print(targetimg)
+                cheese = 0
+                target = 0
+                score +=1
+                print(str(score))
+                scoredis.config(text ="Your score is " + str(score))
+                chesx = nchesx
+                chesy = nchesy
+                targx = ntargx
+                targy = ntargy
+        else:
+            mouse.collisionsdetect()
+    if event.keysym == "Down":
+        
+        mouse.move_object_down()
+        if cheese == 1:
+            cheeseimg.move_object_down()
+            chesy += 10 
+            cheeseimg.collisionsdetect()
+            if target == 1:
+                nchesx = randint(55,945)
+                nchesy = randint(55,945)
+                ntargx = randint(10,990)
+                ntargy = randint(10,990)
+                cheeseimg.randmove(chesx, chesy, nchesx, nchesy)
+                targetimg.randmove(targx, targy, ntargx, ntargy)
+                print(cheeseimg)
+                print(targetimg)
+                cheese = 0
+                target = 0
+                score +=1
+                scoredis.config(text ="Your score is " + str(score))
+                print(str(score))
+                chesx = nchesx
+                chesy = nchesy
+                targx = ntargx
+                targy = ntargy
+        else:
+            mouse.collisionsdetect()
+    if event.keysym == "space":
+        print(mouse)
+        print(cheeseimg)
+        print(targetimg)
+        
+
+
+
+
+
+
+
+win = Tk()
+
+
+win.geometry("1000x1000")
+win.title("Game")
+canvas = Canvas(win, width= 1100, height =1100)
+canvas.pack()
+scoredis = Label(text = "Your score is 0 ", fg = "black", bg = "white")
+
+scoredis.place(x = 450, y = 50)
+chesx = randint(0,900)
+chesy = randint(0,900)
+targx = randint(0,900)
+targy = randint(0,900)
+
+
+mouse= createconimage(canvas, 200,200, "mouse.gif")
+cheeseimg= createnpcimage(canvas, chesx, chesy, "cheese.gif")
+targetimg= createnpcimage(canvas, targx, targy, "target.gif")
+
+
+
+canvas.bind_all("<KeyPress>", movearrow)
+
+
