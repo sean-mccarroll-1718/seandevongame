@@ -1,0 +1,97 @@
+from random import randint
+player = 1
+
+def start():
+
+    #itislizes the game with a random pile number and random pile size for each pile
+    piles = []
+    removedpiles = []
+    number = randint(4,13)
+    for x in range(0, number):
+        piles.append(randint(5,35)
+    #introduces players to the game
+
+
+
+
+                     
+    print("You are playing the pile game. There are " + str(number) + " piles. You can grab from any pile you want any amnout you want the person to grab the last stone wins")
+    print("You grab from any pile by naming the number of pile you want to grab from then how many. For example you grab three from pile 4 by typing 4 then on the next line you would type 3 as a number")
+    print("You can see how many are in each pile by typing remaining")
+    input("Press enter when your ready to continue")
+    turn(player)
+
+
+def turn(player):
+    print("It is player" + str(player) + " turn")
+    choose = input("What pile would you like to take from or would you like to see remaining in all piles.")
+                     
+    if choose.lower() == "remaining":
+        remaining()
+    else:
+        try:
+            float(choose)
+        except ValueError:
+            print("please input a number")
+            turn(player)
+        if float(choose) > len(piles):
+            print("please input a number of a pile that exists")
+            turn(player)
+                     
+        pilechoice = float(choose) -1
+
+                     
+        piletake = input("Player " + str(player) + " is taking from " + str(choose) + " it has " + str(piles[pilechoice]) + " items remaining how many would you like to withdraw")
+
+
+
+        pilenumber = pile[pilechoice]
+        pile[pilechoice] = pilenumber - piletake
+
+
+
+
+
+
+                     
+        if pile[pilechoice] == 0:
+            removedpiles.append(pilechoice)
+        elif pile[pilechoice] < 0:
+            removedpiles.append(pilechoice)
+            pile[pilechoice] = 0
+
+
+        if player == 1:
+            player = 2
+        if player == 2:
+            player = 1
+        turn(player)
+
+
+
+
+
+
+def remaining():
+    print("the below text is the number reaming in each pile")
+    print(pile)
+    input("press enter when you want to continune")
+    turn(player)
+    
+    
+ start()                   
+        
+                
+        
+                     
+        
+            
+        
+            
+        
+    
+    
+                     
+
+
+
