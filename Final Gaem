@@ -1,0 +1,315 @@
+from tkinter import *
+from random import randint
+import time
+
+sword = 0
+loop = 1
+
+#This creates main class
+class deathstroke:
+    global sword
+    def __init__(self, canvas, x, y, photo, master, image = "deathstroke.gif"):
+        self.canvas = canvas
+        self.x = x
+        self.y = y
+        self.photo= image
+        self.master= master
+
+        self.pic = PhotoImage(file = self.photo)
+        self.pic_img = self.pic
+        self.ds = canvas.create_image(self.x, self.y, image = self.pic)
+        
+        self.edgeLeft = True    
+        self.edgeRight = True
+        self.edgeUp = True
+        self.edgeDown = True
+
+#Defines variable creating boundaries
+    def local(self):
+        global sword
+        location = canvas.bbox(self.ds)
+        if location[0] <= 10:
+            self.edgeLeft = False
+            self.edgeRight = True
+            self.edgeUp = True
+            self.edgeDown = True
+        elif location[2] >= 1920:
+            instructions.config (text = "You Win!")
+            self.edgeLeft = False
+            self.edgeRight = False
+            self.edgeUp = False
+            self.edgeDown = False
+        elif location[1] <= 0:
+            self.edgeLeft = True
+            self.edgeRight = True
+            self.edgeUp = False
+            self.edgeDown = True
+        elif location[3] >=930:
+            self.edgeLeft = True
+            self.edgeRight = True
+            self.edgeUp = True
+            self.edgeDown = False
+        else:
+            self.edgeLeft = True
+            self.edgeRight = True
+            self.edgeUp = True
+            self.edgeDown = True
+        if location [2] >= 1920 and location[1] <= 0:
+            self.edgeLeft = True
+            self.edgeRight = False
+            self.edgeUp = False
+            self.edgeDown = True
+        elif location [0] <= 10 and location[1] <= 0:
+            self.edgeLeft = False
+            self.edgeRight = True
+            self.edgeUp = False
+            self.edgeDown = True
+        elif location [3] >= 930 and location[2] >= 1920:
+            self.edgeLeft = True
+            self.edgeRight = False
+            self.edgeUp = True
+            self.edgeDown = False
+        elif location [3] >= 930 and location[2] <= 10:
+            self.edgeLeft = False
+            self.edgeRight = True
+            self.edgeUp = True
+            self.edgeDown = False
+
+#Creates collision detection
+        collision = canvas.find_overlapping(location[0], location[1], location[2], location[3])
+        if  22 in collision or 3 in collision or 4 in collision or 5 in collision or 6 in collision or 7 in collision or 8 in collision or 9 in collision or 10 in collision or 11 in collision or 12 in  collision or 13 in collision or 14 in collision or 15 in collision or 16 in collision or 17 in collision or 18 in collision or 19 in collision or 20 in collision or 21 in collision:
+            self.edgeLeft = False
+            self.edgeRight = False
+            self.edgeUp = False
+            self.edgeDown = False
+            instructions.config(text="You Blew Up!")
+        elif 23 in collision:
+            sword = 1
+        elif 2 in collision:
+            if sword == 1:
+                self.edgeLeft = True
+                self.edgeRight = True
+                self.edgeUp = True
+                self.edgeDown = True
+                instructions.config(text="You killed the bat! Now reach the right wall.")
+            else:
+                self.edgeLeft = False
+                self.edgeRight = False
+                self.edgeUp = False
+                self.edgeDown = False
+                instructions.config(text="The bat killed you!")
+#Defines character moving variables
+            
+    def right(self):
+        self.local()
+        if self.edgeRight == True:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 7.5,0)
+                self.canvas.after(1)
+        elif self.edgeRight == False:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,0)
+                self.canvas.after(1)
+        else:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 7.5,0)
+                self.canvas.after(1)
+    def left(self):
+        self.local()
+        if self.edgeLeft== True:
+            for i in range(0,4):
+                self.canvas.move(self.ds, -7.5,0)
+                self.canvas.after(1)
+        elif self.edgeLeft == False:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,0)
+                self.canvas.after(1)
+        else:
+            for i in range(0,4):
+                self.canvas.move(self.ds, -7.5,0)
+                self.canvas.after(1)
+    def up(self):
+        self.local()
+        if self.edgeUp== True:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,-7.5)
+                self.canvas.after(1)
+        elif self.edgeUp == False:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,0)
+                self.canvas.after(1)
+        else:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,-7.5)
+                self.canvas.after(1)
+    def down(self):
+        self.local()
+        if self.edgeDown== True:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,7.5)
+                self.canvas.after(1)
+        elif self.edgeDown == False:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,0)
+                self.canvas.after(1)
+        else:
+            for i in range(0,4):
+                self.canvas.move(self.ds, 0,7.5)
+                self.canvas.after(1)
+class Sword(deathstroke):
+ 
+    def __init__(self, canvas, image = "sword.gif"):
+        self.canvas = canvas
+        self.x = randint(10,1000)
+        self.y = randint(10,1000)
+        self.image = image
+        self.picture = PhotoImage(file = self.image)
+        self.picture.copy = self.picture
+        self.sword = self.canvas.create_image(self.x, self.y, image = self.picture)
+
+    def right(self):
+        for i in range(0,4):
+            self.canvas.move(self.sword, 7.5,0)
+            self.canvas.after(1)
+    def left(self):
+        for i in range(0,4):
+            self.canvas.move(self.sword, -7.5,0)
+            self.canvas.after(1)
+    def up(self):
+        for i in range(0,4):
+            self.canvas.move(self.sword, 0,-7.5)
+            self.canvas.after(1)
+    def down(self):
+        for i in range(0,4):
+            self.canvas.move(self.sword, 0,7.5)
+            self.canvas.after(1)
+
+#Binds keys to moving functions
+def movement(event):
+    global sword
+    if event.keysym == "d":
+        death.right()
+        if sword == 1:
+            s23.right()           
+    if event.keysym == "a":
+        death.left()
+        if sword == 1:
+            s23.left()
+    if event.keysym == "w":
+        death.up()
+        if sword == 1:
+            s23.up()
+    if event.keysym == "s":
+        death.down()
+        if sword == 1:
+            s23.down()
+    if event.keysym == "Right":
+        death.right()
+        if sword == 1:
+            s23.right()
+    if event.keysym == "Left":
+        death.left()
+        if sword == 1:
+            s23.left()
+    if event.keysym == "Up":
+        death.up()
+        if sword == 1:
+            s23.up()
+    if event.keysym == "Down":
+        death.down()
+        if sword == 1:
+            s23.down()
+
+#Creats bomb class
+class Bombs:
+    def __init__(self, canvas, loop, image = "bomb.gif"):
+        self.canvas = canvas
+        self.image = image
+        self.loop = loop
+        self.x = randint(10,1920)
+        self.y = randint(10,1000)
+        loop = 1
+        self.picture = PhotoImage(file = self.image)
+        self.picture.copy = self.picture
+        self.bomb = self.canvas.create_image(self.x, self.y, image = self.picture)
+        def loop(self):
+            location = canvas.bbox(self.bomb)
+            collision = canvas.find_overlapping(location[0], location[1], location[2], location[3])
+            self.x = randint(10,1920)
+            self.y = randint(10,1000)
+            if 1 in collision:
+                self.loop()
+                
+class Bat:
+    def __init__ (self, canvas,movex = 0,movey=0, image = "bat.gif"):
+        self.canvas = canvas
+        self.x = 500
+        self.y = 200
+        self.movex = movex
+        self.movey = movey
+        self.image = image
+        self.movementhappens = True
+        self.picture = PhotoImage(file = self.image)
+        self.picture.copy = self.picture
+        self.mario = self.canvas.create_image(self.x, self.y, image = self.picture)
+    def loopingthemovement(self):
+        self.location = canvas.bbox(self.mario)
+        collision = canvas.find_overlapping(self.location[0], self.location[1], self.location[2], self.location[3])
+        if 1 in collision:
+            self.movementhappens = False
+        else:
+            if self.movementhappens == True:
+                self.moving()
+                self.canvas.after(10, self.loopingthemovement)
+    def rmovement(self):
+        self.movex = randint(0,10)
+        self.movey = randint(0,10)
+        self.loopingthemovement()
+        self.canvas.after(5000, self.rmovement) 
+    def moving(self):
+        self.canvas.move(self.mario, int(self.movex), int(self.movey))
+        self.location = canvas.bbox(self.mario)
+        if self.location[1] <= 0 or self.location[3] >= 930:
+            self.movey = self.movey * -1
+        if self.location[0] <= 10 or self.location[2] >= 1920:
+            self.movex = self.movex * -1
+    
+    
+    
+#Window/Canvas/Title/Picture       
+window = Tk()
+window.title("Deathstroke's Death Run")
+canvas = Canvas(window, width = 1920, height = 1080, bg = "dark green")
+canvas.pack()
+death = deathstroke(canvas, 200, 200, "deathstroke.gif", -1)
+bat = Bat(canvas)
+bat.rmovement()
+canvas.bind_all("<KeyPress>", movement)
+
+#Instructions labeled to game
+instructions = Label(fg = "maroon", bg = "dark green")
+instructions.place(x=900, y=50)
+instructions.config(text="Reach the right wall without blowing up")
+
+#Creates bombs on screen
+b3 = Bombs(canvas,loop)
+b4 = Bombs(canvas,loop)
+b5 = Bombs(canvas,loop)
+b6 = Bombs(canvas,loop)
+b7 = Bombs(canvas,loop)
+b8 = Bombs(canvas,loop)
+b9 = Bombs(canvas,loop)
+b10 = Bombs(canvas,loop)
+b11 = Bombs(canvas,loop)
+b12 = Bombs(canvas,loop)
+b13 = Bombs(canvas,loop)
+b14 = Bombs(canvas,loop)
+b15 = Bombs(canvas,loop)
+b16 = Bombs(canvas,loop)
+b17 = Bombs(canvas,loop)
+b18 = Bombs(canvas,loop)
+b19 = Bombs(canvas,loop)
+b20 = Bombs(canvas,loop)
+b21 = Bombs(canvas,loop)
+b22 = Bombs(canvas,loop)
+s23 = Sword(canvas)
