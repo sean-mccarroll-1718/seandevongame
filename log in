@@ -43,3 +43,97 @@ class Login():
         if (self.nametext  + self.favcolor +"\n") in self.line:
             win2 = Tk()
             logged = Success(win2)
+
+        
+        
+        
+    
+    
+
+
+
+        
+        #if validate is still 0, a label is created to tell the user their information doesn't match our records
+
+
+
+        self.file.close() #closes the file to keep it secure
+
+class Success(): #This class creates a new window that tells the user they were successful in logging in
+    def __init__(self, win2):
+        self.win2 = win2
+        self.win2.title("Success")
+        self.win2.configure(background = "orange")
+        self.win2.geometry("550x550+800+800")
+
+        self.label = Label(self.win2, text = ("Successful login! Welcome."))
+        self.label.pack()
+
+
+
+
+
+win = Tk()
+win.geometry("550x550+800+800")
+win.title("Let's Learn About You!")
+
+#defining the variables for collecting user data
+user = StringVar()
+colorchoice = StringVar()
+verify = StringVar()
+
+def register():
+    #collects the information from the entry boxes
+    nametext = username.get()
+    favcolor = color.get()
+    vefifycolor = recolor.get()
+
+    
+
+    #creates an instance of the Register class and calls the save function within
+    getstarted = Register(win, nametext, favcolor, vefifycolor)
+    getstarted.save()
+
+def datacheck():
+    #collects the information from the entry boxes
+    nametext = username.get()
+    favcolor = color.get()
+    vefifycolor = recolor.get()
+
+
+    
+
+    #creates an instance of the Login class and calls the validation function within
+    moveon = Login(win, nametext, favcolor, vefifycolor)
+    moveon.validation()
+    
+
+    
+    
+
+#Creating the labels and entry boxes for users to enter data    
+userlabel = Label(win, text = "What's Your Name", bg= "black", fg="white")
+userlabel.place(x=70, y=50)
+
+username = Entry(win, textvariable=user, bg = "pink")
+username.place(x=275, y=50)
+
+passlabel = Label(win, text = "What's Your Favorite Color?", bg = "purple", fg="white")
+passlabel.place(x=70, y=100)
+
+color = Entry(win, textvariable=colorchoice, bg = "yellow")
+color.place(x=275, y=100)
+
+colorlabel = Label(win, text = "Re-enter your color choice", bg = "purple", fg="white")
+colorlabel.place(x=70, y=150)
+
+recolor = Entry(win, textvariable=verify, bg = "yellow")
+recolor.place(x=275, y=150)
+
+#when the Login button is clicked, the collectdata function is called
+login = Button(win, text = "Login", highlightbackground = "purple", command =datacheck)
+login.place(x=200, y=225)
+
+#when the Register button is clicked, the register function is called
+register = Button(win, text = "Register", highlightbackground = "purple", command=register)
+register.place(x=300, y=225)
