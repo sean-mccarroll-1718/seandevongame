@@ -1,0 +1,45 @@
+from tkinter import *
+
+class Register():
+    def __init__(self, win, nametext, favcolor, vefifycolor):
+        self.win = win
+        self.nametext = nametext
+        self.favcolor = favcolor
+        self.vefifycolor = vefifycolor
+
+    #if the information given matches store it, close this window and open a new one 
+    def save(self):
+        #checks to see if the two colors they entered are equal
+        if self.favcolor == self.vefifycolor:
+            #opens a new file and calls it username.txt or opens the existing file called username.txt and writes over the top of anything that's already there ("w")
+           
+           
+
+
+
+            #opens a new file and calls it registration.txt and makes it appendable
+            self.reg = open("reg.txt","a")
+            self.reg.write(self.nametext  + self.favcolor +"\n")
+            
+            self.win.destroy() #closes the login window
+
+class Login():
+    def __init__(self, win, nametext, favcolor, vefifycolor):
+        self.win = win
+        self.nametext = nametext
+        self.favcolor = favcolor
+        self.vefifycolor = vefifycolor
+
+    def validation(self):
+        #opens the registration.txt file and makes it readable ("r")
+        self.file = open("reg.txt", "r")
+        self.line = self.file.readlines()#reads the lines in the file
+        validate = 0 #defines a variable that will equal 0 if the information doesn't match and 1 if it does
+        
+
+        #checks each line in the registration file to determine if the user exists (turns validate to 1 if it does)
+        #if the information matches our files, a new window is opened that calls on the Success class
+        self.end = "\n"
+        if (self.nametext  + self.favcolor +"\n") in self.line:
+            win2 = Tk()
+            logged = Success(win2)
